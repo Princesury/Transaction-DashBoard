@@ -2,9 +2,9 @@ import MonthSelector from "./monthSelector"
 
 const Navbar = ({currentMonth,changeMonth}) => {
   return(
-    <div className=" h-16 w-screen flex justify-around items-center bg-gray-800">
-      <h1>
-        Dashboard
+    <div className=" h-16 w-screen flex justify-around items-center bg-gray-800 ">
+      <h1 className="font-Lora text-4xl font-bold">
+        Transaction Dashboard
       </h1>
       <div>
       <MonthSelector

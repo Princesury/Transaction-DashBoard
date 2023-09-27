@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import ProductTable from './components/table'
 import Statistics from './components/Statistics';
 import CustomBarChart from './components/BarChart';
@@ -13,19 +13,31 @@ const App = () => {
   const [sortedPieChartData, setSortedPieChartData] = useState([]);
   const [currentMonth, setCurrentMonth] = useState('1');
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); // Initialize with 1 page
+  const [totalPages, setTotalPages] = useState(10);
+  const [data, setData] = useState([]);
 
-  const itemsPerPage = 6;
+
+  const itemsPerPage = 6; // Number of items to display per page
+  // const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = data.slice(startIndex, endIndex);
+  // const totalPages = Math.ceil(data.length / itemsPerPage);
+  console.log(totalPages,"totalPages")
+  
+  // setData(currentData)
+  // setCurrentPage(currentPage);
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
   const handleMonthChange = (event) => {
     const newMonth = event.target.value;
     setCurrentMonth(newMonth);
     console.log(newMonth);
   };
 
-  const handlePageChange = (totalPages) => {
-    
-    setCurrentPage(totalPages);
-  };
 
   useEffect(() => {
     fetch(`http://localhost:3002/api/products/combinedData?month=${currentMonth}&page=${currentPage}`)
@@ -36,14 +48,9 @@ const App = () => {
         console.log(data.allStatistics);
         setBarChartData(data.allRanges);
         setSortedPieChartData(data.allCategory.sort((a, b) => b.count - a.count)); 
-        const totalItems = data.allProducts.length;
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        console.log("Total Items:", totalItems); // Log the total items
-        console.log("Total Pages:", totalPages); // Log the total pages
-
-        setTotalPages(totalPages);
+  
       });
-  }, [currentMonth, currentPage,itemsPerPage]);
+  }, [currentMonth, currentPage]);
 
 
   return (
@@ -53,13 +60,15 @@ const App = () => {
       </div>
       <div className="container mx-auto pt-20">
       <div className=' p-4 bg-gray-800 rounded-md overflow-y-scroll'>
+        <div className='flex flex-row justify-between items-center mb-2'>
       <h1 className="text-2xl font-semibold mb-4">Product Table</h1>
-      <ProductTable data={tableData} currentPage={currentPage} itemsPerPage={itemsPerPage} />
       <Pagination
-       handlePageChange={handlePageChange}
-       currentPage={currentPage}
-       totalPages={totalPages}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
       />
+      </div>
+      <ProductTable data={tableData}  />
       </div>
       <div className=' mt-4 p-4 bg-gray-800 rounded-md '>
         <h1 className="text-2xl font-semibold mb-4">Statistics</h1>

@@ -1,5 +1,5 @@
 // import React,{useState} from 'react';
-const ProductTable = ({ data, currentPage, itemsPerPage }) => {
+const ProductTable = ({ data }) => {
   // const indexOfLastItem = currentPage * itemsPerPage;
   // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   // const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
