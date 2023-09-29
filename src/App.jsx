@@ -5,6 +5,8 @@ import CustomBarChart from './components/BarChart';
 import CustomPieChart from './components/pieChart';
 import Navbar from './components/navbar';
 import Pagination from './components/Pagination'
+// import { someFunction } from './someModule.js';
+
 
 const App = () => {
   const [tableData, setTableData] = useState([]);
