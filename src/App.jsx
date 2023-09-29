@@ -9,13 +9,15 @@ import Pagination from './components/Pagination'
 const App = () => {
   const [tableData, setTableData] = useState([]);
   const [statisticsData, setStatisticsData] = useState();
+  const [month , setMonth] = useState("March")
   const [barChartData, setBarChartData] = useState([]);
   const [sortedPieChartData, setSortedPieChartData] = useState([]);
-  const [currentMonth, setCurrentMonth] = useState('1');
+  const [currentMonth, setCurrentMonth] = useState('3');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
   const [data, setData] = useState([]);
 
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December"]
 
   const itemsPerPage = 6; // Number of items to display per page
   // const [currentPage, setCurrentPage] = useState(1);
@@ -38,13 +40,14 @@ const App = () => {
     console.log(newMonth);
   };
 
-
+  // https://backend12.azurewebsites.net/api/products/combinedData?month=${currentMonth}&page=${currentPage}
   useEffect(() => {
-    fetch(`http://localhost:3002/api/products/combinedData?month=${currentMonth}&page=${currentPage}`)
+    fetch(`https://backend12.azurewebsites.net/api/products/combinedData?month=${currentMonth}&page=${currentPage}`)
       .then((response) => response.json())
       .then((data) => {
         setTableData(data.allProducts);
         setStatisticsData(data.allStatistics);
+        setMonth(monthNames[currentMonth-1])
         console.log(data.allStatistics);
         setBarChartData(data.allRanges);
         setSortedPieChartData(data.allCategory.sort((a, b) => b.count - a.count)); 
@@ -71,16 +74,16 @@ const App = () => {
       <ProductTable data={tableData}  />
       </div>
       <div className=' mt-4 p-4 bg-gray-800 rounded-md '>
-        <h1 className="text-2xl font-semibold mb-4">Statistics</h1>
+        <h1 className="text-2xl font-semibold mb-4">Statistics for {month}</h1>
       <Statistics data={statisticsData} />
       </div>
       <div className='mt-4 pb-10 flex flex-row gap-4'>
       <div className='flex-1 p-3 bg-gray-800 rounded-md'>
-      <h1 className="text-2xl font-semibold mb-4">Bar Chart</h1>
+      <h1 className="text-2xl font-semibold mb-4">Bar Chart for {month}</h1>
       <CustomBarChart data={barChartData} />
       </div>
       <div className='flex-1 p-3 bg-gray-800 rounded-md'>
-      <h1 className="text-2xl font-semibold mb-4">Pie Chart</h1>
+      <h1 className="text-2xl font-semibold mb-4">Pie Chart for {month}</h1>
       <CustomPieChart data={sortedPieChartData} />
       </div>
       </div>
