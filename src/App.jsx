@@ -3,7 +3,7 @@ import ProductTable from './components/table'
 import Statistics from './components/Statistics';
 // import CustomBarChart from './components/BarChart';
 // import CustomPieChart from './components/pieChart';
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import Pagination from './components/Pagination'
 // import { someFunction } from './someModule.js';
 
