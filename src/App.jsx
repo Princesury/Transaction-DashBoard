@@ -66,7 +66,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June", "Jul
       setCustomBarChart(() => module.default);
     });
 
-    import('./components/pieChart').then((module) => {
+    import('./components/PieChart').then((module) => {
       setCustomPieChart(() => module.default);
     });
   }, []);
